@@ -1,0 +1,65 @@
+@import "./variables";
+
+.toolbar {
+  position: absolute;
+  height: $toolbar-height;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  box-shadow: 0 4px 5px gray;
+  &.settings {
+    top: $toolbar-height;
+  }
+  &.tool {
+    top: 0;
+    z-index: 5;
+  }
+  & .wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__btn {
+    width: 25px;
+    height: 25px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background-size: cover;
+    &:not(:last-child) {
+      margin-right: 0.6rem;
+    }
+    &.brush {
+      background: url("../assets/img/brush.png") no-repeat center;
+    }
+    &.rect {
+      background: url("../assets/img/rect.png") no-repeat center;
+    }
+    &.circle {
+      background: url("../assets/img/circle.png") no-repeat center;
+    }
+    &.eraser {
+      background: url("../assets/img/eraser.png") no-repeat center;
+    }
+    &.line {
+      background: url("../assets/img/line.png") no-repeat center;
+    }
+    &.color {
+      width: 30px;
+    }
+    &.redo {
+      background: url("../assets/img/redo.png") no-repeat center;
+    }
+    &.undo {
+      background: url("../assets/img/undo.png") no-repeat center;
+    }
+    &.save {
+      background: url("../assets/img/save.png") no-repeat center;
+    }
+  }
+  &__draw,
+  &__options {
+    display: flex;
+    align-items: center;
+  }
+}
