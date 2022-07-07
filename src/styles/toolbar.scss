@@ -20,14 +20,30 @@
     align-items: center;
   }
   &__btn {
-    width: 25px;
-    height: 25px;
+    width: 24px;
+    height: 24px;
     border: none;
     outline: none;
     cursor: pointer;
-    background-size: cover;
+    background-size: cover !important;
+    position: relative;
+    &[disabled] {
+      opacity: .4;
+      cursor: default;
+    }
+    &.active {
+      &.toolbar__btn::after {
+        content: '';
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        border: 1px solid black;
+        top: -4px;
+        left: -4px;
+      }
+    }
     &:not(:last-child) {
-      margin-right: 0.6rem;
+      margin-right: 1rem;
     }
     &.brush {
       background: url("../assets/img/brush.png") no-repeat center;
@@ -45,7 +61,7 @@
       background: url("../assets/img/line.png") no-repeat center;
     }
     &.color {
-      width: 30px;
+      margin-left: 20px;
     }
     &.redo {
       background: url("../assets/img/redo.png") no-repeat center;
@@ -61,5 +77,34 @@
   &__options {
     display: flex;
     align-items: center;
+  }
+}
+
+.settings {
+  &__styles,
+  &__control {
+    display: flex;
+    align-items: center;
+  }
+  &__styles {
+    gap: 1rem;
+  }
+  &__control {
+    gap: .4rem;
+    & input[type="number"] {
+      width: 40px;
+      height: 25px;
+    }
+  }
+  &__btn {
+    height: 25px;
+    padding: 3px 15px;
+    cursor: pointer;
+    position: relative;
+    &:hover {
+      top: 1px;
+      left: 1px;
+      box-shadow: -2px -2px 2px 1px aquamarine;
+    }
   }
 }
