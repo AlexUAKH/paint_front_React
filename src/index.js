@@ -1,13 +1,19 @@
-import React from "react";
+import React, { createContext } from "react";
 import ReactDOM from "react-dom/client";
 import "./styles/index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import ToolState from "./store/toolState";
+import CanvasState from "./store/canvasState";
+
+export const Context = createContext({ tool: new ToolState(), canvas: new CanvasState() });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <App />
+    <Context.Provider value={{ tool: new ToolState(), canvas: new CanvasState() }}>
+      <App />
+    </Context.Provider>
   </React.StrictMode>
 );
 
