@@ -1,12 +1,14 @@
 import React, { useContext, useState } from "react";
 import "../styles/toolbar.scss";
 import Brush from "../tools/brush";
-import { Context } from "../index";
 import Rectangle from "../tools/rectangle";
 import Eraser from "../tools/eraser";
 import Circle from "../tools/circle";
 import Line from "../tools/line";
+import { Context } from "../index";
 import { observer } from "mobx-react-lite";
+
+const tools = ['brush', 'rect', 'circle', 'eraser', 'line'];
 
 const ToolBar = observer(() => {
   const { canvas, tool } = useContext(Context);
@@ -47,11 +49,15 @@ const ToolBar = observer(() => {
     <div className="toolbar tool">
       <div className="wrapper _container">
         <div className="toolbar__draw">
-          <button className={`toolbar__btn brush ${active === "brush" ? "active" : ""}`} onClick={() => setActiveTool('brush')} />
-          <button className={`toolbar__btn rect ${active === "rect" ? "active" : ""}`} onClick={() => setActiveTool('rect')} />
-          <button className={`toolbar__btn circle ${active === "circle" ? "active" : ""}`} onClick={() => setActiveTool('circle')} />
-          <button className={`toolbar__btn eraser ${active === "eraser" ? "active" : ""}`} onClick={() => setActiveTool('eraser')} />
-          <button className={`toolbar__btn line ${active === "line" ? "active" : ""}`} onClick={() => setActiveTool('line')}  />
+          {
+            tools.map(tool => (
+              <button
+                key={tool}
+                className={`toolbar__btn ${tool} ${active === tool ? "active" : ""}`}
+                onClick={() => setActiveTool(tool)}
+              />
+            ))
+          }
         </div>
         <div className="toolbar__options">
           <button className="toolbar__btn undo" disabled={!canvas.haveUndo} onClick={() => canvas.undo()} />
