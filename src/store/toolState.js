@@ -26,4 +26,4 @@ class ToolState {
   }
 }
 
-export default ToolState;
+export default new ToolState();

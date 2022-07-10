@@ -4,11 +4,25 @@ import { Context } from "../index";
 import { observer } from "mobx-react-lite";
 
 const SettingsBar = observer(() => {
-  const { tool } = useContext(Context);
+  const { canvas, tool } = useContext(Context);
   const changeColor = (e) => {
     tool.setFillColor(e);
     tool.setStrokeColor(e);
   }
+  const clear = () => {
+    const confirm = window.confirm("Save image before clearing. All data will be lost. ");
+    if (confirm) {
+      canvas.clearCanvas();
+      canvas.socketService.sendClear();
+    }
+  }
+  const share = () => {
+    navigator.clipboard.writeText(`http://localhost:3000/${canvas.sessionId}`)
+      .then(() => {
+        window.alert("Link was copied. For collaboration just send it to your friend");
+    })
+  }
+
   return (
     <div className="toolbar settings">
       <div className="wrapper _container">
@@ -43,7 +57,8 @@ const SettingsBar = observer(() => {
           </div>
         </div>
         <div className="settings__actions">
-          <button className="settings__btn">Share</button>
+          <button className="settings__btn btn" onClick={clear}>Clear</button>
+          <button className="settings__btn btn" onClick={share}>Share</button>
         </div>
 
         </div>

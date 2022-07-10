@@ -1,17 +1,34 @@
 import Tool from "./tool";
 
 export default class Line extends Tool {
-  constructor(canvas) {
-    super(canvas);
+  constructor(canvas, socketService) {
+    super(canvas, socketService);
+  }
+
+  mouseUpHandler() {
+    super.mouseUpHandler();
+    const figure = {
+      type: 'line',
+      ax: this.startX,
+      ay: this.startY,
+      bx: this.targetX,
+      by: this.targetY,
+      color: this.ctx.strokeStyle,
+      lineWidth: this.ctx.lineWidth
+    }
+    this.socketService.sendDraw(figure);
+    this.socketService.sendFinish();
   }
 
   mouseMoveHandler(e) {
     if (this.mouseDown) {
-      this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop);
+      this.targetX = e.pageX - e.target.offsetLeft;
+      this.targetY = e.pageY - e.target.offsetTop;
+      this.preDraw( this.targetX, this.targetY );
     }
   }
 
-  draw(x, y) {
+  preDraw(x, y) {
     const img = new Image();
     img.src = this.saved;
     img.onload = () => {
@@ -22,5 +39,14 @@ export default class Line extends Tool {
       this.ctx.lineTo(x, y);
       this.ctx.stroke();
     }
+  }
+
+  static draw(ctx, ax, ay, bx, by, color, lineWidth) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    ctx.moveTo(ax, ay);
+    ctx.lineTo(bx, by);
+    ctx.stroke();
   }
 }

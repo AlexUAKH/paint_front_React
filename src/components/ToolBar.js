@@ -12,24 +12,24 @@ const tools = ['brush', 'rect', 'circle', 'eraser', 'line'];
 
 const ToolBar = observer(() => {
   const { canvas, tool } = useContext(Context);
-  const [active, setActive] = useState('brush');
+  const [active, setActive] = useState('');
 
   const setActiveTool = (name) => {
     switch (name) {
       case "brush":
-        tool.setTool(new Brush(canvas.canvas));
+        tool.setTool(new Brush(canvas.canvas, canvas.socketService));
         break;
       case "rect":
-        tool.setTool(new Rectangle(canvas.canvas));
+        tool.setTool(new Rectangle(canvas.canvas, canvas.socketService));
         break;
       case "circle":
-        tool.setTool(new Circle(canvas.canvas));
+        tool.setTool(new Circle(canvas.canvas, canvas.socketService));
         break;
       case "eraser":
-        tool.setTool(new Eraser(canvas.canvas));
+        tool.setTool(new Eraser(canvas.canvas, canvas.socketService));
         break;
       case "line":
-        tool.setTool(new Line(canvas.canvas));
+        tool.setTool(new Line(canvas.canvas, canvas.socketService));
         break;
     }
     setActive(name);

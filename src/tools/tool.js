@@ -1,7 +1,8 @@
 export default class Tool {
-  constructor(canvas) {
+  constructor(canvas, socketService) {
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
+    this.socketService = socketService;
     // this.destroyEvents();
     this.listen();
   }
@@ -28,9 +29,10 @@ export default class Tool {
 
   mouseDownHandler(e) {
     this.mouseDown = true;
-    this.ctx.beginPath();
     this.startX = e.pageX - e.target.offsetLeft;
-    this.startY = e.pageY - e.target.offsetTop
+    this.startY = e.pageY - e.target.offsetTop;
+    this.ctx.moveTo(this.startX, this.startY);
+    this.ctx.beginPath();
     this.saved = this.canvas.toDataURL();
   }
 

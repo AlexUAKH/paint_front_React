@@ -1,18 +1,55 @@
 import { makeAutoObservable } from "mobx";
 
 class CanvasState {
-  canvas = null;
-  undoList = [];
-  redoList = [];
+  _canvas = null;
+  _ctx = null;
+  _socketService = null;
+  _undoList = [];
+  _redoList = [];
+  _socket = null;
+  _sessionId = null;
   _haveUndo = false;
+  _username = '';
   constructor() {
     makeAutoObservable(this);
   }
 
   setCanvas(canvas) {
-    this.canvas = canvas;
+    this._canvas = canvas;
+    this._ctx = canvas.getContext('2d');
+  }
+  get canvas() {
+    return this._canvas;
+  }
+  get ctx() {
+    return this._ctx;
+  }
+  setSocketService(service) {
+    this._socketService = service;
+  }
+  get socketService() {
+    return this._socketService;
+  }
+  setSocket(socket) {
+    this._socket = socket;
+  }
+  get socket() {
+      return this._socket;
   }
 
+  setSessionId(id) {
+    this._sessionId = id;
+  }
+  get sessionId() {
+    return this._sessionId;
+  }
+
+  setUsername(username) {
+    this._username = username;
+  }
+  get username() {
+    return this._username;
+  }
   get haveUndo() {
     return this._haveUndo;
   }
@@ -20,46 +57,48 @@ class CanvasState {
     this._haveUndo = val;
   }
   get haveRedo() {
-    return this.redoList.length > 0;
+    return this._redoList.length > 0;
   }
 
   pushToUndoList(data) {
     // this.undoList.push(this.canvas.toDataURL());
-    this.undoList.push(data);
+    this._undoList.push(data);
     if (!this.haveUndo) this.setHaveUndo(true);
   }
   pushToRedoList(data) {
-    this.redoList.push(data);
+    this._redoList.push(data);
   }
 
   undo() {
-    const ctx = this.canvas.getContext('2d');
-    if (this.undoList.length > 0) {
+    if (this._undoList.length > 0) {
       const img = new Image();
       this.pushToRedoList(this.canvas.toDataURL())
-      img.src = this.undoList.pop();
+      img.src = this._undoList.pop();
       img.onload = () => {
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
+        this._ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this._ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
       }
     } else {
-      ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+      this._ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.setHaveUndo(false);
     }
 
   }
   redo() {
-    const ctx = this.canvas.getContext('2d');
-    if (this.undoList.length > 0) {
+    if (this._undoList.length > 0) {
       const img = new Image();
       this.pushToUndoList(this.canvas.toDataURL())
-      img.src = this.redoList.pop();
+      img.src = this._redoList.pop();
       img.onload = () => {
-        ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
+        this.clearCanvas();
+        this._ctx.drawImage(img, 0, 0, this.canvas.width, this.canvas.height);
       }
     }
   }
+
+  clearCanvas() {
+    this._ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+  }
 }
 
-export default CanvasState;
+export default new CanvasState();

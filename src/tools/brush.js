@@ -1,8 +1,13 @@
 import Tool from "./tool";
 
 export default class Brush extends Tool {
-  constructor(canvas, color) {
-    super(canvas, color);
+  constructor(canvas, socketService) {
+    super(canvas, socketService);
+  }
+
+  mouseUpHandler() {
+    super.mouseUpHandler();
+    this.socketService.sendFinish();
   }
 
   mouseDownHandler(e) {
@@ -13,12 +18,22 @@ export default class Brush extends Tool {
 
   mouseMoveHandler(e) {
     if (this.mouseDown) {
-      this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop);
+      // this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop);
+      const figure = {
+        type: 'brush',
+        x: e.pageX - e.target.offsetLeft,
+        y: e.pageY - e.target.offsetTop,
+        color: this.ctx.strokeStyle,
+        lineWidth: this.ctx.lineWidth
+      }
+      this.socketService.sendDraw(figure);
     }
   }
 
-  draw(x, y) {
-    this.ctx.lineTo(x, y);
-    this.ctx.stroke();
+  static draw(ctx, x, y, color, lineWidth) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = lineWidth;
+    ctx.lineTo(x, y);
+    ctx.stroke();
   }
 }
