@@ -93,21 +93,15 @@
   &__styles {
     gap: 1rem;
   }
+  &__actions {
+    display: flex;
+    gap: .5rem;
+  }
   &__control {
     gap: .4rem;
     & input[type="number"] {
       width: 40px;
       height: 25px;
-    }
-  }
-  &__btn {
-    height: 25px;
-    padding: 3px 15px;
-    cursor: pointer;
-    position: relative;
-    transition: all .4s ease-out;
-    &:hover {
-      transform: scale(1.1);
     }
   }
 }

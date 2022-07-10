@@ -6,12 +6,12 @@ import reportWebVitals from "./reportWebVitals";
 import ToolState from "./store/toolState";
 import CanvasState from "./store/canvasState";
 
-export const Context = createContext({ tool: new ToolState(), canvas: new CanvasState() });
+export const Context = createContext({ tool: ToolState, canvas: CanvasState });
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Context.Provider value={{ tool: new ToolState(), canvas: new CanvasState() }}>
+    <Context.Provider value={{ tool: ToolState, canvas: CanvasState }}>
       <App />
     </Context.Provider>
   </React.StrictMode>
