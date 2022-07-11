@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 
 const SettingsBar = observer(() => {
   const { canvas, tool } = useContext(Context);
+
   const changeColor = (e) => {
     tool.setFillColor(e);
     tool.setStrokeColor(e);
@@ -17,7 +18,7 @@ const SettingsBar = observer(() => {
     }
   }
   const share = () => {
-    navigator.clipboard.writeText(`http://localhost:3000/${canvas.sessionId}`)
+    navigator.clipboard.writeText(window.location.href)
       .then(() => {
         window.alert("Link was copied. For collaboration just send it to your friend");
     })
