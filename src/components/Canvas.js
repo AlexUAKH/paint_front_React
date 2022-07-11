@@ -10,6 +10,7 @@ import Circle from "../tools/circle";
 import Eraser from "../tools/eraser";
 import Line from "../tools/line";
 import SocketService from "../services/socketService";
+import axios from "axios";
 
 const Canvas = observer(() => {
   const [show, setShow] = useState(true);
@@ -19,6 +20,14 @@ const Canvas = observer(() => {
 
   useEffect(() => {
     canvas.setCanvas(canvasRef.current);
+    axios.get(`http://localhost:4500/picture/${router.id}`, {responseType: 'json'})
+      .then((picture) => {
+        const img = new Image();
+        img.src = picture.data;
+        img.onload = () => {
+          canvas.ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+          canvas.ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
+        }})
   }, [])
 
   useEffect(() => {
@@ -47,8 +56,11 @@ const Canvas = observer(() => {
             break;
           case 'clear':
             canvas.clearCanvas();
-            console.log("clear")
             break;
+          case 'undo':
+            undoHandler(msg);
+            break;
+
         }
       }
     }
@@ -78,14 +90,35 @@ const Canvas = observer(() => {
         break
     }
   }
-
+  const undoHandler = (msg) => {
+    console.log(msg)
+    // const img = new Image();
+    // img.src = msg.data;
+    // img.onload = () => {
+    //   canvas.ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+    //   canvas.ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
+    // }
+  }
   const mouseDownHandler = () => {
     canvas.pushToUndoList(canvasRef.current.toDataURL());
+  }
+  const mouseUpHandler = () => {
+    axios.post(
+      `http://localhost:4500/picture/${router.id}`,
+      {img: canvasRef.current.toDataURL()}
+    )
+      .then(() => console.log("saved"));
   }
 
   return (
     <div className="canvas _container">
-      <canvas ref={canvasRef} width={600} height={400} onMouseDown={() => mouseDownHandler()} />
+      <canvas
+        ref={canvasRef}
+        width={600}
+        height={400}
+        onMouseDown={() => mouseDownHandler()}
+        onMouseUp={() => mouseUpHandler()}
+      />
       <Modal show={show} setShow={setShow} />
     </div>
   );

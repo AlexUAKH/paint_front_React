@@ -45,6 +45,12 @@ const ToolBar = observer(() => {
     document.body.removeChild(a);
   }
 
+  const undoHandler = () => {
+    canvas.undo();
+    const picture = canvas.canvas.toDataURL()
+    canvas.socketService.sendMessage("undo", picture);
+  }
+
   return (
     <div className="toolbar tool">
       <div className="wrapper _container">
@@ -60,7 +66,7 @@ const ToolBar = observer(() => {
           }
         </div>
         <div className="toolbar__options">
-          <button className="toolbar__btn undo" disabled={!canvas.haveUndo} onClick={() => canvas.undo()} />
+          <button className="toolbar__btn undo" disabled={!canvas.haveUndo} onClick={undoHandler} />
           <button className="toolbar__btn redo" disabled={!canvas.haveRedo} onClick={() => canvas.redo()} />
           <button className="toolbar__btn save" onClick={() => save()}/>
         </div>
