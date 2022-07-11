@@ -15,7 +15,7 @@ const Modal = ({ show, setShow }) => {
 
   useEffect(() => {
     if (name.trim()) {
-      if (!touched) setTouched(true);
+      setTouched(true);
       setValid(true);
     } else {
       setValid(false);
