@@ -20,7 +20,7 @@ const Canvas = observer(() => {
 
   useEffect(() => {
     canvas.setCanvas(canvasRef.current);
-    axios.get(`http://localhost:4500/picture/${router.id}`, {responseType: 'json'})
+    axios.get(`https://paint-back.herokuapp.com/picture/${router.id}`, {responseType: 'json'})
       .then((picture) => {
         if (picture.data) {
           const img = new Image();
@@ -36,7 +36,7 @@ const Canvas = observer(() => {
 
   useEffect(() => {
     if (!show) {
-      const socket = new WebSocket("ws://localhost:4500/ws");
+      const socket = new WebSocket("ws://paint-back.herokuapp.com/ws");
       const id = router.id;
       canvas.setSocket(socket);
       canvas.setSessionId(id);
@@ -108,7 +108,7 @@ const Canvas = observer(() => {
   }
   const mouseUpHandler = () => {
     axios.post(
-      `http://localhost:4500/picture/${router.id}`,
+      `https://paint-back.herokuapp.com/picture/${router.id}`,
       {img: canvasRef.current.toDataURL()}
     )
       .then(() => console.log("saved"));
