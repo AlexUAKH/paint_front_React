@@ -1,9 +1,6 @@
 import Tool from "./tool";
 
 export default class Circle extends Tool {
-  constructor(canvas, socketService) {
-    super(canvas, socketService);
-  }
 
   mouseUpHandler() {
     super.mouseUpHandler();
@@ -18,6 +15,7 @@ export default class Circle extends Tool {
     }
     this.socketService.sendDraw(figure);
     this.socketService.sendFinish();
+    this.radius = 0;
   }
 
   mouseMoveHandler(e) {

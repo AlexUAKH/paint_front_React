@@ -1,9 +1,6 @@
 import Tool from "./tool";
 
 export default class Brush extends Tool {
-  constructor(canvas, socketService) {
-    super(canvas, socketService);
-  }
 
   mouseUpHandler() {
     super.mouseUpHandler();

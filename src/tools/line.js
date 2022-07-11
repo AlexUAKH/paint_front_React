@@ -1,11 +1,8 @@
 import Tool from "./tool";
 
 export default class Line extends Tool {
-  constructor(canvas, socketService) {
-    super(canvas, socketService);
-  }
 
-  mouseUpHandler() {
+  mouseUpHandler(e) {
     super.mouseUpHandler();
     const figure = {
       type: 'line',
@@ -18,6 +15,8 @@ export default class Line extends Tool {
     }
     this.socketService.sendDraw(figure);
     this.socketService.sendFinish();
+    this.targetX = e.pageX - e.target.offsetLeft;
+    this.targetY = e.pageY - e.target.offsetTop;
   }
 
   mouseMoveHandler(e) {

@@ -1,9 +1,6 @@
 import Tool from "./tool";
 
 export default class Rectangle extends Tool {
-  constructor(canvas, socket, id, socketService) {
-    super(canvas, socket, id, socketService);
-  }
 
   mouseUpHandler() {
     super.mouseUpHandler();
@@ -19,8 +16,8 @@ export default class Rectangle extends Tool {
     }
     this.socketService.sendDraw(figure);
     this.socketService.sendFinish();
-    // this.sendToSocket(figure);
-    // this.sendToSocket({type: 'finish'});
+    this.width = 0;
+    this.height = 0;
   }
 
   mouseMoveHandler(e) {

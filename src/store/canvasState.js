@@ -82,7 +82,6 @@ class CanvasState {
       this._ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
       this.setHaveUndo(false);
     }
-
   }
   redo() {
     if (this._undoList.length > 0) {
