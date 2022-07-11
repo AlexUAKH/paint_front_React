@@ -15,7 +15,6 @@ export default class Brush extends Tool {
 
   mouseMoveHandler(e) {
     if (this.mouseDown) {
-      // this.draw(e.pageX - e.target.offsetLeft, e.pageY - e.target.offsetTop);
       const figure = {
         type: 'brush',
         x: e.pageX - e.target.offsetLeft,

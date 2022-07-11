@@ -22,12 +22,16 @@ const Canvas = observer(() => {
     canvas.setCanvas(canvasRef.current);
     axios.get(`http://localhost:4500/picture/${router.id}`, {responseType: 'json'})
       .then((picture) => {
-        const img = new Image();
-        img.src = picture.data;
-        img.onload = () => {
-          canvas.ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-          canvas.ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
-        }})
+        if (picture.data) {
+          const img = new Image();
+          img.src = picture.data;
+          img.onload = () => {
+            canvas.ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+            canvas.ctx.drawImage(img, 0, 0, canvasRef.current.width, canvasRef.current.height);
+          }
+        }
+      })
+      .catch(e => console.log(e) )
   }, [])
 
   useEffect(() => {
