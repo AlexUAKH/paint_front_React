@@ -24,6 +24,13 @@ export default class SocketService {
       figure
     }))
   }
+  sendMessage(type, data) {
+    this.socket.send(JSON.stringify({
+      type,
+      id: this.sessionId,
+      data
+    }))
+  }
 
   // static sendFinish = (socket, sessionId) => {
   //   socket.send(JSON.stringify({
