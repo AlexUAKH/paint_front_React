@@ -4,7 +4,7 @@ import ToolBar from "./components/ToolBar";
 import Canvas from "./components/Canvas";
 import SettingsBar from "./components/SettingsBar";
 import "./styles/app.scss";
-
+//u${(+new Date()).toString(16)}
 const App = () => {
   return (
     <BrowserRouter>
@@ -15,7 +15,7 @@ const App = () => {
           <Route path="/:id" element={<Canvas />} />
           <Route
             path="*"
-            element={<Navigate replace to={`u${(+new Date()).toString(16)}`} />}
+            element={<Navigate replace to={`/u47fc687t`}  />}
           />
         </Routes>
       </div>

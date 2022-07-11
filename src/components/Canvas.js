@@ -20,6 +20,7 @@ const Canvas = observer(() => {
 
   useEffect(() => {
     canvas.setCanvas(canvasRef.current);
+    console.log("id: ", router)
     axios.get(`https://paint-back.herokuapp.com/picture/${router.id}`, {responseType: 'json'})
       .then((picture) => {
         if (picture.data) {
@@ -36,7 +37,7 @@ const Canvas = observer(() => {
 
   useEffect(() => {
     if (!show) {
-      const socket = new WebSocket("ws://paint-back.herokuapp.com/ws");
+      const socket = new WebSocket("wss://paint-back.herokuapp.com/ws");
       const id = router.id;
       canvas.setSocket(socket);
       canvas.setSessionId(id);
