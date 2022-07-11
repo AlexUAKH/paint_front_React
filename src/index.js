@@ -17,6 +17,9 @@ root.render(
   </React.StrictMode>
 );
 
+
+// PUBLIC_URL ="https://alexuakh.github.io/paint_front_React/"
+
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
