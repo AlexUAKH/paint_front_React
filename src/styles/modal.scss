@@ -1,14 +1,14 @@
 .modal {
   &.hide {
     transform: rotate(-180deg) translate(100%, 100%);
-    transition: all .7s ease-in-out;//cubic-bezier(0.2,-1.5,0.8,2)//ease;
+    transition: all 0.7s ease-in-out; //cubic-bezier(0.2,-1.5,0.8,2)//ease;
   }
   position: fixed;
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(0, 0, 0, .4);
+  background: rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(3px);
   z-index: 20;
   display: flex;
@@ -20,11 +20,9 @@
     border-radius: 1.2rem;
     padding: 1rem;
     width: 400px;
-
   }
   &__body {
     margin-bottom: 2rem;
-
   }
   &__title {
     font-size: 1.8rem;
@@ -35,12 +33,12 @@
   &__text {
     font-size: 1.4rem;
     line-height: 2rem;
-    margin-bottom: .6rem;
+    margin-bottom: 0.6rem;
   }
   & input {
     height: 2.2rem;
     font-size: 1.4rem;
-    padding: 3px .5rem;
+    padding: 3px 0.5rem;
     width: 100%;
     border-radius: 10px;
     outline: aquamarine;
@@ -50,7 +48,7 @@
   }
   &__action {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     gap: 2rem;
   }
 }

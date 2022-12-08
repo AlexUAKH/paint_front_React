@@ -46,6 +46,7 @@ const Canvas = observer(() => {
         }
       })
       .catch((e) => console.log(e));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -65,6 +66,7 @@ const Canvas = observer(() => {
           })
         );
       };
+
       socket.onmessage = (e) => {
         const msg = JSON.parse(e.data);
         switch (msg.type) {
@@ -80,10 +82,13 @@ const Canvas = observer(() => {
           case "undo":
             undoHandler(msg);
             break;
+          default:
+            break;
         }
       };
     }
-  }, [show]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [canvas]);
 
   const drawHandler = (msg) => {
     const figure = msg.figure;
@@ -131,6 +136,8 @@ const Canvas = observer(() => {
         break;
       case "finish":
         ctx.beginPath();
+        break;
+      default:
         break;
     }
   };
